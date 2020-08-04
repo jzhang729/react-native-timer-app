@@ -5,9 +5,10 @@ interface Props {
   small?: boolean;
   color: string;
   title: string;
+  onPress: void;
 }
 
-const TimerButton: React.FC<Props> = ({ small, color, title }) => {
+const TimerButton: React.FC<Props> = ({ small, color, title, onPress }) => {
   return (
     <TouchableOpacity style={[styles.button, { borderColor: color }]}>
       <Text
