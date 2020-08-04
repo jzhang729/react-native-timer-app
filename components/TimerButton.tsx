@@ -1,16 +1,24 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  GestureResponderEvent,
+} from "react-native";
 
 interface Props {
   small?: boolean;
   color: string;
   title: string;
-  onPress: void;
+  onPress?: (event: GestureResponderEvent) => void;
 }
 
 const TimerButton: React.FC<Props> = ({ small, color, title, onPress }) => {
   return (
-    <TouchableOpacity style={[styles.button, { borderColor: color }]}>
+    <TouchableOpacity
+      style={[styles.button, { borderColor: color }]}
+      onPress={onPress}
+    >
       <Text
         style={[
           styles.buttonText,

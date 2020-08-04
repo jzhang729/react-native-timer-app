@@ -18,6 +18,16 @@ const TimerForm: React.FC<Props> = ({ id, title, project }) => {
           <TextInput
             style={styles.textInput}
             underlineColorAndroid="transparent"
+            defaultValue={title}
+          ></TextInput>
+        </View>
+      </View>
+      <View style={styles.attributeContainer}>
+        <Text style={styles.textInputTitle}>Project</Text>
+        <View style={styles.textInputContainer}>
+          <TextInput
+            style={styles.textInput}
+            underlineColorAndroid="transparent"
             defaultValue={project}
           ></TextInput>
         </View>

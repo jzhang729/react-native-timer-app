@@ -8,10 +8,12 @@ interface Timer {
   isRunning: boolean;
 }
 
-export const millisecondsToHuman = (ms: number) => {
-  const seconds = Math.floor((ms / 1000) % 60);
-  const minutes = Math.floor((ms / 1000 / 60) % 60);
-  const hours = Math.floor(ms / 1000 / 60 / 60);
+export const millisecondsToHuman = (ms: string) => {
+  const msToNumber = Number(ms);
+
+  const seconds = Math.floor((msToNumber / 1000) % 60);
+  const minutes = Math.floor((msToNumber / 1000 / 60) % 60);
+  const hours = Math.floor(msToNumber / 1000 / 60 / 60);
 
   const humanized = [
     pad(hours.toString(), 2),

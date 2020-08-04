@@ -17,6 +17,7 @@ const App: React.FC = () => {
           title="Mow the lawn"
           project="House chores"
           elapsed="342832048"
+          // editFormOpen
           isRunning
         />
         <EditableTimer
