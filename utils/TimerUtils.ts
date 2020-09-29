@@ -1,14 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
+import { Timer } from "../interfaces";
 
-interface Timer {
-  title: string;
-  project: string;
-  id: string;
-  elapsed: number;
-  isRunning: boolean;
-}
-
-export const millisecondsToHuman = (ms: string) => {
+export const millisecondsToHuman = (ms: string | number) => {
   const msToNumber = Number(ms);
 
   const seconds = Math.floor((msToNumber / 1000) % 60);

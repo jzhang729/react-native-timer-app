@@ -4,10 +4,10 @@ import TimerButton from "./TimerButton";
 import { millisecondsToHuman } from "../utils/TimerUtils";
 
 interface Props {
-  id: string;
+  id: number | string;
   title: string;
   project: string;
-  elapsed: string;
+  elapsed: number;
   isRunning?: boolean;
 }
 

@@ -1,32 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { newTimer } from "./utils/TimerUtils";
+import { NewTimer } from "./interfaces";
 
 import EditableTimer from "./components/EditableTimer";
 import ToggleableTimerForm from "./components/ToggleableTimerForm";
 
 const App: React.FC = () => {
+  const [timers, setTimers] = useState([
+    {
+      title: "Mow the Lawn",
+      project: "House Chores",
+      id: uuidv4(),
+      elapsed: 5456099,
+      isRunning: true,
+    },
+    {
+      title: "Bake Squash",
+      project: "Kitchen Chores",
+      id: uuidv4(),
+      elapsed: 5456099,
+      isRunning: false,
+    },
+  ]);
+
+  const handleCreateFormSubmit = (timer: NewTimer): void => {
+    const newTimers = [newTimer(timer), ...timers];
+    setTimers(newTimers);
+  };
+
   return (
     <View style={styles.appContainer}>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Timers</Text>
       </View>
       <ScrollView style={styles.timerList}>
-        <ToggleableTimerForm isOpen={false} />
-        <EditableTimer
-          id="1"
-          title="Mow the lawn"
-          project="House chores"
-          elapsed="342832048"
-          // editFormOpen
-          isRunning
+        <ToggleableTimerForm
+          isOpen={false}
+          onFormSubmit={handleCreateFormSubmit}
         />
-        <EditableTimer
-          id="2"
-          title="Bake squash"
-          project="Kitchen chores"
-          elapsed="3243243242"
-          editFormOpen
-        />
+        {timers.map(({ title, project, id, elapsed, isRunning }) => (
+          <EditableTimer
+            key={id}
+            id={id}
+            title={title}
+            project={project}
+            elapsed={elapsed}
+            isRunning={isRunning}
+          />
+        ))}
       </ScrollView>
     </View>
   );
