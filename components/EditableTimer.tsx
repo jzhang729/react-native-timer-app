@@ -10,6 +10,7 @@ interface Props {
   project: string;
   elapsed: number | undefined;
   onFormSubmit: (timer: TimerInterface) => void;
+  onRemovePress: (timerId: string | number | undefined) => void;
 }
 
 const EditableTimer: React.FC<Props> = ({
@@ -19,6 +20,7 @@ const EditableTimer: React.FC<Props> = ({
   isRunning,
   elapsed,
   onFormSubmit,
+  onRemovePress,
 }) => {
   const [editFormOpen, setEditFormOpen] = useState(false);
 
@@ -61,6 +63,7 @@ const EditableTimer: React.FC<Props> = ({
       elapsed={elapsed}
       isRunning={isRunning}
       onEditPress={handleEditPress}
+      onRemovePress={onRemovePress}
     />
   );
 };

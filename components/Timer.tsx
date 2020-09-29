@@ -10,6 +10,7 @@ interface Props {
   elapsed: number | undefined;
   isRunning?: boolean;
   onEditPress: () => void;
+  onRemovePress: (id: string | number | undefined) => void;
 }
 
 const Timer: React.FC<Props> = ({
@@ -18,8 +19,13 @@ const Timer: React.FC<Props> = ({
   project,
   elapsed,
   onEditPress,
+  onRemovePress,
 }) => {
   const elapsedString = elapsed ? millisecondsToHuman(elapsed) : "";
+
+  const handleRemovePress = (): void => {
+    onRemovePress(id);
+  };
 
   return (
     <View style={styles.timerContainer}>
@@ -28,7 +34,12 @@ const Timer: React.FC<Props> = ({
       <Text style={styles.elapsedTime}>{elapsedString}</Text>
       <View style={styles.buttonGroup}>
         <TimerButton color="blue" small title="Edit" onPress={onEditPress} />
-        <TimerButton color="blue" small title="Remove" />
+        <TimerButton
+          color="blue"
+          small
+          title="Remove"
+          onPress={handleRemovePress}
+        />
       </View>
       <TimerButton color="#21BA45" title="Start" />
     </View>

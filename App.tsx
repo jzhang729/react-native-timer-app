@@ -49,6 +49,11 @@ const App: React.FC = () => {
     setTimers(updatedTimers);
   };
 
+  const handleRemovePress = (timerId: string | number | undefined) => {
+    const updatedTimers = timers.filter((timer) => timer.id !== timerId);
+    setTimers(updatedTimers);
+  };
+
   return (
     <View style={styles.appContainer}>
       <View style={styles.titleContainer}>
@@ -68,6 +73,7 @@ const App: React.FC = () => {
             elapsed={elapsed}
             isRunning={isRunning}
             onFormSubmit={handleFormSubmit}
+            onRemovePress={handleRemovePress}
           />
         ))}
       </ScrollView>
