@@ -1,15 +1,42 @@
-import React from "react";
-import { StyleSheet, View, Text, TextInput } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  GestureResponderEvent,
+} from "react-native";
+import { TimerInterface } from "../interfaces";
 import TimerButton from "./TimerButton";
 
 interface Props {
-  id?: string;
-  title?: string;
-  project?: string;
+  id?: number | string;
+  onFormClose: () => void;
+  onFormSubmit: (timer: TimerInterface) => void;
 }
 
-const TimerForm: React.FC<Props> = ({ id, title, project }) => {
+const TimerForm: React.FC<Props> = ({ id, onFormClose, onFormSubmit }) => {
   const submitText = id ? "Update" : "Create";
+
+  const [title, setTitle] = useState("");
+  const [project, setProject] = useState("");
+
+  const handleTitleChange = (title: string): void => {
+    setTitle(title);
+  };
+
+  const handleProjectChange = (project: string): void => {
+    setProject(project);
+  };
+
+  const handleSubmit = (): void => {
+    onFormSubmit({
+      id,
+      title,
+      project,
+    });
+  };
+
   return (
     <View style={styles.formContainer}>
       <View style={styles.attributeContainer}>
@@ -19,6 +46,7 @@ const TimerForm: React.FC<Props> = ({ id, title, project }) => {
             style={styles.textInput}
             underlineColorAndroid="transparent"
             defaultValue={title}
+            onChangeText={(title) => handleTitleChange(title)}
           ></TextInput>
         </View>
       </View>
@@ -29,12 +57,23 @@ const TimerForm: React.FC<Props> = ({ id, title, project }) => {
             style={styles.textInput}
             underlineColorAndroid="transparent"
             defaultValue={project}
+            onChangeText={(project) => handleProjectChange(project)}
           ></TextInput>
         </View>
       </View>
       <View style={styles.buttonGroup}>
-        <TimerButton small color="#21BA45" title={submitText} />
-        <TimerButton small color="#DB2828" title="Cancel" />
+        <TimerButton
+          small
+          color="#21BA45"
+          title={submitText}
+          onPress={(e: GestureResponderEvent) => handleSubmit()}
+        />
+        <TimerButton
+          small
+          color="#DB2828"
+          title="Cancel"
+          onPress={(e: GestureResponderEvent) => onFormClose()}
+        />
       </View>
     </View>
   );
