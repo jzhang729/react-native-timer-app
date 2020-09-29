@@ -1,25 +1,33 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, GestureResponderEvent } from "react-native";
 import TimerButton from "./TimerButton";
 import { millisecondsToHuman } from "../utils/TimerUtils";
 
 interface Props {
-  id: number | string;
+  id: number | string | undefined;
   title: string;
   project: string;
-  elapsed: number;
+  elapsed: number | undefined;
   isRunning?: boolean;
+  onEditPress: () => void;
 }
 
-const Timer: React.FC<Props> = ({ id, title, project, elapsed, isRunning }) => {
-  const elapsedString = millisecondsToHuman(elapsed);
+const Timer: React.FC<Props> = ({
+  id,
+  title,
+  project,
+  elapsed,
+  onEditPress,
+}) => {
+  const elapsedString = elapsed ? millisecondsToHuman(elapsed) : "";
+
   return (
     <View style={styles.timerContainer}>
       <Text style={styles.title}>{title}</Text>
       <Text>{project}</Text>
       <Text style={styles.elapsedTime}>{elapsedString}</Text>
       <View style={styles.buttonGroup}>
-        <TimerButton color="blue" small title="Edit" />
+        <TimerButton color="blue" small title="Edit" onPress={onEditPress} />
         <TimerButton color="blue" small title="Remove" />
       </View>
       <TimerButton color="#21BA45" title="Start" />

@@ -3,13 +3,13 @@ import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { newTimer } from "./utils/TimerUtils";
-import { NewTimer } from "./interfaces";
+import { TimerInterface } from "./interfaces";
 
 import EditableTimer from "./components/EditableTimer";
 import ToggleableTimerForm from "./components/ToggleableTimerForm";
 
 const App: React.FC = () => {
-  const [timers, setTimers] = useState([
+  const [timers, setTimers] = useState<TimerInterface[]>([
     {
       title: "Mow the Lawn",
       project: "House Chores",
@@ -26,9 +26,27 @@ const App: React.FC = () => {
     },
   ]);
 
-  const handleCreateFormSubmit = (timer: NewTimer): void => {
+  const handleCreateFormSubmit = (timer: TimerInterface): void => {
     const newTimers = [newTimer(timer), ...timers];
+
     setTimers(newTimers);
+  };
+
+  const handleFormSubmit = (attrs: TimerInterface): void => {
+    const updatedTimers = timers.map((timer) => {
+      if (timer.id === attrs.id) {
+        const { title, project } = attrs;
+        return {
+          ...timer,
+          title,
+          project,
+        };
+      }
+
+      return timer;
+    });
+
+    setTimers(updatedTimers);
   };
 
   return (
@@ -49,6 +67,7 @@ const App: React.FC = () => {
             project={project}
             elapsed={elapsed}
             isRunning={isRunning}
+            onFormSubmit={handleFormSubmit}
           />
         ))}
       </ScrollView>

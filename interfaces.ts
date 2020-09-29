@@ -1,13 +1,7 @@
-export interface Timer {
+export interface TimerInterface {
   title: string;
   project: string;
-  id: string;
-  elapsed: number;
-  isRunning: boolean;
-}
-
-export interface NewTimer {
-  title: string;
-  project: string;
-  id: string;
+  id?: number | string | undefined;
+  elapsed?: number;
+  isRunning?: boolean;
 }

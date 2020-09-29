@@ -1,5 +1,6 @@
+import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
-import { Timer } from "../interfaces";
+import { TimerInterface } from "../interfaces";
 
 export const millisecondsToHuman = (ms: string | number) => {
   const msToNumber = Number(ms);
@@ -25,7 +26,7 @@ const pad = (numberString: string, size: number) => {
   return padded;
 };
 
-export const newTimer = (attrs = { title: "", project: "" }): Timer => {
+export const newTimer = (attrs: TimerInterface): TimerInterface => {
   const timer = {
     title: attrs.title || "Timer",
     project: attrs.project || "Project",
