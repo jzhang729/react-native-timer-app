@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
@@ -9,22 +9,56 @@ import EditableTimer from "./components/EditableTimer";
 import ToggleableTimerForm from "./components/ToggleableTimerForm";
 
 const App: React.FC = () => {
+  const TIME_INTERVAL = 1000;
   const [timers, setTimers] = useState<TimerInterface[]>([
     {
       title: "Mow the Lawn",
       project: "House Chores",
       id: uuidv4(),
-      elapsed: 5456099,
+      elapsed: 1000,
       isRunning: true,
     },
     {
       title: "Bake Squash",
       project: "Kitchen Chores",
       id: uuidv4(),
-      elapsed: 5456099,
+      elapsed: 5000,
       isRunning: false,
     },
   ]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      function handleUpdatedTimers(timers: TimerInterface[]) {
+        setTimers(timers);
+      }
+
+      const updatedTimers = timers.map((timer) => {
+        return {
+          ...timer,
+          elapsed: timer.isRunning
+            ? timer.elapsed + TIME_INTERVAL
+            : timer.elapsed,
+        };
+      });
+
+      handleUpdatedTimers(updatedTimers);
+    }, TIME_INTERVAL);
+
+    return () => clearInterval(intervalId);
+  }, [timers]);
+
+  const toggleTimer = (timerId: string | undefined): void => {
+    const updatedTimers = timers.map((timer) => {
+      if (timer.id === timerId) {
+        return { ...timer, isRunning: !timer.isRunning };
+      }
+
+      return timer;
+    });
+
+    setTimers(updatedTimers);
+  };
 
   const handleCreateFormSubmit = (timer: TimerInterface): void => {
     const newTimers = [newTimer(timer), ...timers];
@@ -49,7 +83,7 @@ const App: React.FC = () => {
     setTimers(updatedTimers);
   };
 
-  const handleRemovePress = (timerId: string | number | undefined) => {
+  const handleRemovePress = (timerId: string | undefined) => {
     const updatedTimers = timers.filter((timer) => timer.id !== timerId);
     setTimers(updatedTimers);
   };
@@ -74,6 +108,8 @@ const App: React.FC = () => {
             isRunning={isRunning}
             onFormSubmit={handleFormSubmit}
             onRemovePress={handleRemovePress}
+            onStartPress={toggleTimer}
+            onStopPress={toggleTimer}
           />
         ))}
       </ScrollView>

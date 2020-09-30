@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { GestureResponderEvent, StyleSheet, Text, View } from "react-native";
-import { TimerInterface } from "../interfaces";
 import TimerForm from "./TimerForm";
 import TimerButton from "./TimerButton";
 
 interface Props {
   isOpen?: boolean;
-  onFormSubmit: (timer: TimerInterface) => void;
+  onFormSubmit: (timer: {
+    id: string | undefined;
+    title: string;
+    project: string;
+  }) => void;
 }
 
 const ToggleableTimerForm: React.FC<Props> = ({ onFormSubmit }) => {
@@ -16,7 +19,7 @@ const ToggleableTimerForm: React.FC<Props> = ({ onFormSubmit }) => {
     setIsOpen(true);
   };
 
-  const handleFormSubmit = (timer: TimerInterface) => {
+  const handleFormSubmit = (timer: any) => {
     onFormSubmit(timer);
     setIsOpen(false);
   };

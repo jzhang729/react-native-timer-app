@@ -4,13 +4,19 @@ import Timer from "./Timer";
 import { TimerInterface } from "../interfaces";
 
 interface Props {
-  id: number | string | undefined;
-  isRunning?: boolean;
+  id: string | undefined;
+  isRunning: boolean | undefined;
   title: string;
   project: string;
   elapsed: number | undefined;
-  onFormSubmit: (timer: TimerInterface) => void;
-  onRemovePress: (timerId: string | number | undefined) => void;
+  onFormSubmit: (timer: {
+    id: string | undefined;
+    title: string;
+    project: string;
+  }) => void;
+  onRemovePress: (timerId: string | undefined) => void;
+  onStartPress: (id: string | undefined) => void;
+  onStopPress: (id: string | undefined) => void;
 }
 
 const EditableTimer: React.FC<Props> = ({
@@ -21,6 +27,8 @@ const EditableTimer: React.FC<Props> = ({
   elapsed,
   onFormSubmit,
   onRemovePress,
+  onStartPress,
+  onStopPress,
 }) => {
   const [editFormOpen, setEditFormOpen] = useState(false);
 
@@ -40,7 +48,11 @@ const EditableTimer: React.FC<Props> = ({
     closeForm();
   };
 
-  const handleSubmit = (timer: TimerInterface): void => {
+  const handleSubmit = (timer: {
+    id: string | undefined;
+    title: string;
+    project: string;
+  }): void => {
     onFormSubmit(timer);
     closeForm();
   };
@@ -64,6 +76,8 @@ const EditableTimer: React.FC<Props> = ({
       isRunning={isRunning}
       onEditPress={handleEditPress}
       onRemovePress={onRemovePress}
+      onStartPress={onStartPress}
+      onStopPress={onStopPress}
     />
   );
 };

@@ -31,7 +31,7 @@ export const newTimer = (attrs: TimerInterface): TimerInterface => {
     title: attrs.title || "Timer",
     project: attrs.project || "Project",
     id: uuidv4(),
-    elapsed: 0,
+    elapsed: 1,
     isRunning: false,
   };
 
