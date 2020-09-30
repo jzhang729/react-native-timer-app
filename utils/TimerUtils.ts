@@ -26,7 +26,11 @@ const pad = (numberString: string, size: number) => {
   return padded;
 };
 
-export const newTimer = (attrs: TimerInterface): TimerInterface => {
+export const newTimer = (attrs: {
+  id: string | undefined;
+  title: string;
+  project: string;
+}): TimerInterface => {
   const timer = {
     title: attrs.title || "Timer",
     project: attrs.project || "Project",

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import TimerForm from "./TimerForm";
 import Timer from "./Timer";
-import { TimerInterface } from "../interfaces";
 
 interface Props {
   id: string | undefined;

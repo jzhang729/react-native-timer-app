@@ -60,13 +60,21 @@ const App: React.FC = () => {
     setTimers(updatedTimers);
   };
 
-  const handleCreateFormSubmit = (timer: TimerInterface): void => {
+  const handleCreateFormSubmit = (timer: {
+    id: string | undefined;
+    title: string;
+    project: string;
+  }): void => {
     const newTimers = [newTimer(timer), ...timers];
 
     setTimers(newTimers);
   };
 
-  const handleFormSubmit = (attrs: TimerInterface): void => {
+  const handleFormSubmit = (attrs: {
+    id: string | undefined;
+    title: string;
+    project: string;
+  }): void => {
     const updatedTimers = timers.map((timer) => {
       if (timer.id === attrs.id) {
         const { title, project } = attrs;
