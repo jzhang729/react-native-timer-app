@@ -6,13 +6,16 @@ import {
   TextInput,
   GestureResponderEvent,
 } from "react-native";
-import { TimerInterface } from "../interfaces";
 import TimerButton from "./TimerButton";
 
 interface Props {
-  id?: number | string;
+  id?: string | undefined;
   onFormClose: () => void;
-  onFormSubmit: (timer: TimerInterface) => void;
+  onFormSubmit: (timer: {
+    id: string | undefined;
+    title: string;
+    project: string;
+  }) => void;
 }
 
 const TimerForm: React.FC<Props> = ({ id, onFormClose, onFormSubmit }) => {

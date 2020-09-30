@@ -4,13 +4,15 @@ import TimerButton from "./TimerButton";
 import { millisecondsToHuman } from "../utils/TimerUtils";
 
 interface Props {
-  id: number | string | undefined;
+  id: string | undefined;
   title: string;
   project: string;
   elapsed: number | undefined;
-  isRunning?: boolean;
+  isRunning: boolean | undefined;
   onEditPress: () => void;
-  onRemovePress: (id: string | number | undefined) => void;
+  onRemovePress: (id: string | undefined) => void;
+  onStartPress: (id: string | undefined) => void;
+  onStopPress: (id: string | undefined) => void;
 }
 
 const Timer: React.FC<Props> = ({
@@ -18,13 +20,36 @@ const Timer: React.FC<Props> = ({
   title,
   project,
   elapsed,
+  isRunning,
   onEditPress,
   onRemovePress,
+  onStartPress,
+  onStopPress,
 }) => {
   const elapsedString = elapsed ? millisecondsToHuman(elapsed) : "";
 
   const handleRemovePress = (): void => {
     onRemovePress(id);
+  };
+
+  const handleStartPress = (): void => {
+    onStartPress(id);
+  };
+
+  const handleStopPress = (): void => {
+    onStopPress(id);
+  };
+
+  const renderActionButton = () => {
+    if (isRunning) {
+      return (
+        <TimerButton color="#DB2828" title="Stop" onPress={handleStopPress} />
+      );
+    }
+
+    return (
+      <TimerButton color="#21BA45" title="Start" onPress={handleStartPress} />
+    );
   };
 
   return (
@@ -41,7 +66,8 @@ const Timer: React.FC<Props> = ({
           onPress={handleRemovePress}
         />
       </View>
-      <TimerButton color="#21BA45" title="Start" />
+
+      {renderActionButton()}
     </View>
   );
 };
