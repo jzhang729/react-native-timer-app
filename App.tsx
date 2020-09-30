@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  KeyboardAvoidingView,
+} from "react-native";
 import { newTimer } from "./utils/TimerUtils";
 import { TimerInterface } from "./interfaces";
 
@@ -101,26 +107,31 @@ const App: React.FC = () => {
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Timers</Text>
       </View>
-      <ScrollView style={styles.timerList}>
-        <ToggleableTimerForm
-          isOpen={false}
-          onFormSubmit={handleCreateFormSubmit}
-        />
-        {timers.map(({ title, project, id, elapsed, isRunning }) => (
-          <EditableTimer
-            key={id}
-            id={id}
-            title={title}
-            project={project}
-            elapsed={elapsed}
-            isRunning={isRunning}
-            onFormSubmit={handleFormSubmit}
-            onRemovePress={handleRemovePress}
-            onStartPress={toggleTimer}
-            onStopPress={toggleTimer}
+      <KeyboardAvoidingView
+        behavior="padding"
+        style={styles.timerListContainer}
+      >
+        <ScrollView style={styles.timerList}>
+          <ToggleableTimerForm
+            isOpen={false}
+            onFormSubmit={handleCreateFormSubmit}
           />
-        ))}
-      </ScrollView>
+          {timers.map(({ title, project, id, elapsed, isRunning }) => (
+            <EditableTimer
+              key={id}
+              id={id}
+              title={title}
+              project={project}
+              elapsed={elapsed}
+              isRunning={isRunning}
+              onFormSubmit={handleFormSubmit}
+              onRemovePress={handleRemovePress}
+              onStartPress={toggleTimer}
+              onStopPress={toggleTimer}
+            />
+          ))}
+        </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 };
@@ -142,6 +153,9 @@ const styles = StyleSheet.create({
   },
   timerList: {
     paddingBottom: 15,
+  },
+  timerListContainer: {
+    flex: 1,
   },
 });
 
